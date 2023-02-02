@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  nginx:
+    build:
+     context: .
+     dockerfile: nginx.dockerfile
+    ports:
+      - 80:80
+    volumes:
+      - "nginx_data:/var/www/html"
+  postgis:
+    container_name: local-postgis
+    image: postgis/multi-arch-postgis:11-3.17
+    build:
+      context: .
+      dockerfile: postgis.dockerfile
+    ports:
+      - 25432:25432
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+
+volumes:
+  nginx_data:
+    
